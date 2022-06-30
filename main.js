@@ -1,6 +1,10 @@
 
 /*created by prashant shukla */
 
+rightWristX = "";
+rightWristY = "";
+scoreRightWrist = 0;
+
 var paddle2 =10,paddle1=10;
 
 var paddle1X = 10,paddle1Height = 110;
@@ -39,9 +43,10 @@ function modelLoaded(){
 
 function gotPoses(results){
   if(results.length > 0){
-    noseX = results[0].pose.nose.x;
-    noseY = results[0].pose.nose.y;
-    console.log("noseX = " + noseX +", noseY = " +noseY);
+    rightWristX = results[0].pose.rightWrist.x;
+    rightWristY = results[0].pose.rightWrist.y;
+    scoreRightWrist = results[0].pose.keypoints[10].score;
+    console.log("rightWristX = " + rightWristX +", rightWristY = " +rightWristY);
   }
 }
 
@@ -49,6 +54,12 @@ function gotPoses(results){
 function draw(){
  background(0); 
  image(video, 0, 0, 700, 600);
+
+ if(scoreRightWrist > 0.2){
+   fill("#00ff04");
+   stroke("#00ff04");
+   circle(rightWristX, rightWristY, 20);
+ }
  
  fill("black");
  stroke("black");
